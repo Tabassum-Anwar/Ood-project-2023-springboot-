@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fregments :: head"></head>
+<body class="bg-warning bg-gradient" style="--bs-bg-opacity: .15">
+
+<main class="d-flex flex-nowrap">
+    <div th:replace="fregments :: navbar"></div>
+    <div class="b-example-divider b-example-vr"></div>
+    <div class="p-3 container-fluid">
+
+        <div th:if="${error}" th:replace="fregments :: alert-error"></div>
+        <div th:if="${success}" th:replace="fregments :: alert-success"></div>
+
+    <div class="foods d-flex gap-4 m-4">
+        <div class="card" th:each="foodEach : ${foods}" style="width: 18rem;">
+            <form th:action="@{/add-to-cart}" method="post">
+                <input type="hidden" th:value="${foodEach.id}" name="id">
+                <img th:src="${foodEach.image}" width="18rem" class="card-img-top p-2" th:alt="${foodEach.name}">
+                <hr>
+                <div class="card-body mt-0 pt-0">
+                    <h5 class="cart-title" th:text="${foodEach.name}"></h5>
+                    <span class="fw-bold">Price: <span th:text="${foodEach.price}"></span></span>
+                    <hr>
+                    <p class="cart-text" th:text="${foodEach.description}"></p>
+                    <hr>
+                    <button type="submit" class="btn btn-warning">Add to cart</button>
+                    <a th:href="@{/food/edit/{id}(id=${foodEach.id})}" class="btn btn-info">Edit</a>
+                    <a th:href="@{/food/delete/{id}(id=${foodEach.id})}" class="btn btn-danger">Delete</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    </div>
+</main>
+<div th:replace="fregments :: create-food"></div>
+<div th:replace="fregments :: script"></div>
+</body>
+</html>

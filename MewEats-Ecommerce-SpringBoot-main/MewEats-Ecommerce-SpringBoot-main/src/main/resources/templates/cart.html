@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fregments :: head"></head>
+<body class="bg-warning bg-gradient" style="--bs-bg-opacity: .15">
+
+<main class="d-flex flex-nowrap">
+    <div th:replace="fregments :: navbar"></div>
+    <div class="b-example-divider b-example-vr"></div>
+    <div class="p-3 container-fluid">
+
+        <div th:if="${error}" th:replace="fregments :: alert-error"></div>
+        <div th:if="${success}" th:replace="fregments :: alert-success"></div>
+
+        <div class="row mt-5">
+          <div class="col-md-7">
+            <table class="table table-hover">
+              <thead>
+                  <tr>
+                    <th>SL</th>
+                    <th>Images</th>
+                    <th>Food Name</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                    <th>Action</th>
+                  </tr>
+              </thead>
+
+              <tbody>
+                <tr th:each="carCt, sl : ${carts}">
+                    <form th:action="@{/update-cart}" method="post">
+                        <input type="number" hidden="hidden" name="id" th:value="${cart.id}">
+                        <td th:text="${sl.index + 1}"></td>
+                        <td><img width="80px" th:src="${cart.food.image}" th:alt="${cart.food.name}"></td>
+                        <td th:text="${cart.food.name}"></td>
+                          <td th:text="${cart.food.price}"></td>
+                          <td><input class="form-control" type="number" name="quantity" min="1" th:value="${cart.quantity}"></td>
+                          <td th:text="${cart.quantity * cart.food.price}"></td>
+                          <td>
+                        <button type="submit" value="update" class="btn btn-primary btn-sm">Update</button>
+                        <a class="btn btn-danger btn-sm" th:href="@{'/delete-cart/' + ${cart.id}}">Delete</a>
+                      </td>
+                    </form>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+            <div class="col-md-5 text-end">
+                <h4 class="mb-3">Total Price: <span th:text="${totalPrice}"></span></h4>
+
+                <a th:href="@{/checkout}" class="btn btn-warning">Check Out</a>
+            </div>
+        </div>
+
+    </div>
+</main>
+    <div th:replace="fregments :: create-food"></div>
+    <div th:replace="fregments :: script"></div>
+</body>
+</html>

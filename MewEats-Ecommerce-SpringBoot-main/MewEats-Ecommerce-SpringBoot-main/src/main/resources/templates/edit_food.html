@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fregments :: head"></head>
+<body class="bg-warning bg-gradient" style="--bs-bg-opacity: .15">
+
+<main class="d-flex flex-nowrap">
+    <div th:replace="fregments :: navbar"></div>
+    <div class="b-example-divider b-example-vr"></div>
+    <div class="p-3 container-fluid">
+
+  <div class="row mt-5">
+    <div class="col-md-7 mx-auto">
+      <form th:action="@{/food/edit/save}" th:object="${foodEdit}" method="post">
+          <input type="text" class="form-control" hidden="hidden" id="id" th:field="*{id}" name="id" required>
+          <div class="form-group mb-4">
+            <label for="foodName">Name</label>
+            <input type="text" class="form-control" id="foodName" th:field="*{name}" name="foodName" required>
+          </div>
+          <div class="form-group mb-4">
+            <label for="foodPrice">Price</label>
+            <input type="number" class="form-control" id="foodPrice" th:field="*{price}" name="foodPrice" required>
+          </div>
+          <div class="form-group mb-4">
+            <label for="foodCategory">Category Name</label>
+            <input type="text" class="form-control" id="foodCategory" th:field="*{category}" name="foodCategory" required>
+          </div>
+          <div class="form-group mb-4">
+            <label for="foodImage">Image Url</label>
+            <input type="url" class="form-control" id="foodImage" th:field="*{image}" name="foodImage" required>
+          </div>
+          <div class="form-group mb-4">
+            <label for="foodImage">Description</label>
+            <textarea  class="form-control" rows="6" id="foodDescription" th:field="*{description}" name="foodDescription"></textarea>
+          </div>
+          <button type="submit" class="btn btn-success">Save food</button>
+      </form>
+    </div>
+  </div>
+
+    </div>
+</main>
+<div th:replace="fregments :: create-food"></div>
+<div th:replace="fregments :: script"></div>
+</body>
+</html>
